@@ -1,0 +1,28 @@
+/* app.component.css */
+
+.app-main {
+    margin-left: 20%; /* Adjusted to match navbar width */
+    display: flex;
+    justify-content: center;
+  }
+  
+.app-container {
+    display: flex;
+    height: 100vh; /* sets the height to the full viewport height */
+    overflow: hidden; /* hides any overflowing content */
+  }
+  
+  app-navbar {
+    width: 15%; /* adjust this to suit your needs */
+    position: fixed; /* fixes the position */
+    height: 100%; /* sets the height to fill its parent */
+    overflow-y: auto; /* allows scrolling if the content overflows */
+  }
+  
+  router-outlet {
+    width: 85%; /* adjust this to suit your needs */
+    margin-left: 20%; /* pushes the content to the right of the navbar */
+    height: 100%; /* sets the height to fill its parent */
+    overflow-y: auto; /* allows scrolling if the content overflows */
+  }
+  
