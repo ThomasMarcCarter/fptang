@@ -1,13 +1,19 @@
 <!-- login.component.html -->
-<h1>Login</h1>
-<form (ngSubmit)="login()">
-  <label>
-    Email:
-    <input type="email" [(ngModel)]="email" name="email" required>
-  </label>
-  <label>
-    Password:
-    <input type="password" [(ngModel)]="password" name="password" required>
-  </label>
-  <button type="submit">Login</button>
-</form>
+<div class="vh-100 d-flex justify-content-center align-items-center">
+  <div class="w-50 text-center">
+    <img src="/assets/images/print.png" alt="logo" class="img-fluid mb-5" style="max-width: 200px;">
+    <form (ngSubmit)="login()">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email:</label>
+        <input type="email" [(ngModel)]="email" name="email" id="email" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password:</label>
+        <input type="password" [(ngModel)]="password" name="password" id="password" class="form-control" required>
+      </div>
+      <div>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </div>
+    </form>
+  </div>
+</div>
