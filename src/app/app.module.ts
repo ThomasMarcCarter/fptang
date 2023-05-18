@@ -1,9 +1,10 @@
 // src/app/app.module.ts
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-
+import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -24,13 +25,15 @@ import { AuthGuard } from './guards/auth.guard';
     NavbarComponent,
     ClassroomsComponent,
     StudentsComponent,
-    ActivityLogComponent
+    ActivityLogComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    RouterModule
+    BrowserAnimationsModule,
+    RouterModule,
+    CommonModule
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
