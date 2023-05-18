@@ -1,2 +1,89 @@
-<!-- src/app/classrooms/classrooms.component.html -->
-<h1>This page is Classrooms</h1>
+<div class="container-custom" style="margin-left: 15%;">
+    <router-outlet></router-outlet>
+    <div class="row">
+      <div class="col-sm">
+        <a [routerLink]="['pg01']" style="text-decoration: none; color: inherit;">
+            <div class="info-box">
+                <h3>Classroom ID: <span class="badge bg-info">PG01</span></h3>
+                <ul>
+                  <li>
+                    <h4>Current Class: <span class="badge bg-primary">Software Engineering</span></h4>
+                  </li>
+                  <li>
+                    <h6>Student Total: <span class="badge bg-warning">12</span></h6>
+                  </li>
+                </ul>
+    
+                <div class="table-responsive" style="height: 200px;">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">#ID</th>
+                        <th scope="col">Student Name</th>
+                        <th scope="col">Time-in-room</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- Repeat for each row -->
+                      <tr>
+                        <th scope="row">s5212345</th>
+                        <td>Thomas Carter</td>
+                        <td>{{ timer$ | async }}</td>
+                      </tr>
+    
+                      <!-- More rows... -->
+                    </tbody>
+                  </table>
+                </div>
+    
+                <div class="d-flex justify-content-end align-items-end">
+                  <span class="badge bg-success position-relative mb-2">Status: Online <span class="position-absolute top-0 start-0 translate-middle badge border border-light rounded-circle bg-success p-2"></span></span>
+                </div>
+              </div>
+        </a>
+      </div>
+
+      <div class="col-sm">
+        <a [routerLink]="['pg02']" style="text-decoration: none; color: inherit;">
+          <div class="info-box">
+            <h3>Classroom ID: <span class="badge bg-info">PG01</span></h3>
+            <ul>
+              <li>
+                <h4>Current Class: <span class="badge bg-primary">Software Engineering</span></h4>
+              </li>
+              <li>
+                <h6>Student Total: <span class="badge bg-warning">12</span></h6>
+              </li>
+            </ul>
+
+            <div class="table-responsive" style="height: 200px;">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">#ID</th>
+                    <th scope="col">Student Name</th>
+                    <th scope="col">Time-in-room</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Repeat for each row -->
+                  <tr>
+                    <th scope="row">s5212345</th>
+                    <td>Thomas Carter</td>
+                    <td>{{ timer$ | async }}</td>
+                  </tr>
+
+                  <!-- More rows... -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="d-flex justify-content-end align-items-end">
+              <span class="badge bg-success position-relative mb-2">Status: Online <span class="position-absolute top-0 start-0 translate-middle badge border border-light rounded-circle bg-success p-2"></span></span>
+            </div>
+          </div>
+        </a>
+      </div>
+      <!-- Repeat for other classrooms -->
+    </div>
+</div>

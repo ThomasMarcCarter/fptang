@@ -1,2 +1,12 @@
-/* src/app/classrooms/classrooms.component.css */
-/* Add any specific styles for the classrooms component here. */
+.container-custom {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.info-box {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
