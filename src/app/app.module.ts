@@ -16,6 +16,7 @@ import { ActivityLogComponent } from './activity-log/activity-log.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { AuthGuard } from './guards/auth.guard';
     FormsModule,
     BrowserAnimationsModule,
     RouterModule,
-    CommonModule
+    CommonModule,
+    HttpClientModule
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
