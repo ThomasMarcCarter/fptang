@@ -1,4 +1,32 @@
-<div @slideInDownAnimation>
-    <h1> Kill me pls </h1>>
+<div @slideInUpAnimation class="container-custom-log" style="margin: 1px; width:100%;">
+
+    <div class="col-sm-3">
+      <input class="form-control" type="text" placeholder="Search..." aria-label="Search">
+    </div>
+
+
+  <!-- Table and Buttons -->
+  <div class="row">
+    <div class="col-sm-8 w-100">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#ID</th>
+              <th scope="col">Student ID</th>
+              <th scope="col">Time-in-room</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let log of activityLogs">
+              <td>{{log.logEntryId}}</td>
+              <td>{{log.studentId}}</td>
+              <td>{{log.logTime}}</td>
+              <td>{{log.logLocation}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-  
+</div>

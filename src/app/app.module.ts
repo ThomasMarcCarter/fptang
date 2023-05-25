@@ -17,6 +17,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
+import { Pg01Component } from './classrooms/pg01/pg01.component';
+import { Pg02Component } from './classrooms/pg02/pg02.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,8 @@ import { HttpClientModule } from '@angular/common/http';
     ClassroomsComponent,
     StudentsComponent,
     ActivityLogComponent,
+    Pg01Component,
+    Pg02Component
   ],
   imports: [
     BrowserModule,
@@ -35,7 +40,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     RouterModule,
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    AgGridModule
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]

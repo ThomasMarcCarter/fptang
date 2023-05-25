@@ -1,6 +1,6 @@
 export class ActLog {
-    logEntryId?: number;
-    studentId?: number;
-    logTime?: number;
-    logLocation?: number;
+    logEntryId: number = 0;
+    studentId: number = 0;
+    logTime: string = '';
+    logLocation: number = 0;
 }

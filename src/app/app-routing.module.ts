@@ -29,7 +29,7 @@ const routes: Routes = [
         path: 'pg02',
         component: Pg02Component,
         canActivate: [AuthGuard]
-      }
+      },
       // other children routes...
     ]
   },

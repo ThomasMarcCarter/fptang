@@ -6,9 +6,10 @@ import {
   animate,
   transition,
 } from '@angular/animations';
-import { Observable, interval, map, startWith } from 'rxjs';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { ActLogService } from '../../act-log.service';
+import { ActLog } from '../../act-log';
+import { interval } from 'rxjs';
+import { startWith, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pg01',
@@ -27,16 +28,48 @@ import { AuthService } from '../../services/auth.service';
   ]
 })
 export class Pg01Component implements OnInit {
-  constructor(public authService: AuthService, private router: Router) { } // Router injected here
-  timer$: Observable<number> = new Observable();
-  startTime: number = 0;
+  activityLogs: ActLog[] = [];
+  mostRecentLogs: ActLog[] = [];
 
-  ngOnInit() {
-    this.startTime = Date.now();
-    this.timer$ = interval(1000).pipe(
+  constructor(private actLogService: ActLogService) { }
+
+  ngOnInit(): void {
+    interval(5000).pipe(
       startWith(0),
-      map(() => Math.floor((Date.now() - this.startTime) / 1000))
-    );
-  }
+      switchMap(() => this.actLogService.findAll())
+    ).subscribe(logs => {
+      console.log('Service response:', logs);  // Check service response
+      
+      // Group logs by studentId
+      const groupedLogs: { [key: string]: ActLog[] } = {};
 
+      for (const log of logs) {
+        if (!groupedLogs[log.studentId]) {
+          groupedLogs[log.studentId] = [];
+        }
+        groupedLogs[log.studentId].push(log);
+      }
+
+      console.log('Grouped logs:', groupedLogs);  // Check grouped logs
+      
+      // For each group, sort logs by logTime in descending order and pick the first log (i.e., the most recent)
+      const mostRecentLogs: ActLog[] = [];
+      for (const studentId in groupedLogs) {
+        const studentLogs = groupedLogs[studentId];
+        studentLogs.sort((a, b) => new Date(b.logTime || '').getTime() - new Date(a.logTime || '').getTime()); // sort in descending order
+        mostRecentLogs.push(studentLogs[0]); // pick the most recent
+      }
+
+      console.log('Most recent logs:', mostRecentLogs);  // Check most recent logs
+
+      // Filter out logs not in classroom 1
+      const logsInClassroom1 = mostRecentLogs.filter(log => log.logLocation === 1);
+
+      // Do something with logsInClassroom1...
+      this.activityLogs = logsInClassroom1;
+
+      console.log('Activity Logs:', this.activityLogs);  // Check activityLogs
+      return logsInClassroom1;
+    });
+  }
 }
