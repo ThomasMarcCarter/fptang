@@ -5,10 +5,10 @@
         <h3>Control Unit 1</h3>
         
         <div class="mb-2">
-          <P>Current CID: </P>
+          <P>Current CID: {{currentRoomId}} </P>
           <label for="controlUnit1Input" style="margin-left: 8px">Update CID:</label>
-          <input type="text" id="controlUnit1Input" class="form-control" style="width:40px; margin-left: 8px; margin-top: 10px;">
-          <button type="button" class="btn btn-primary ms-2" style="margin-top: 10px;">Update</button>
+          <input [(ngModel)]="newRoomId" type="text" id="controlUnit1Input" class="form-control" style="width:40px; margin-left: 8px; margin-top: 10px;">
+          <button type="button" class="btn btn-primary ms-2" style="margin-top: 10px;" (click)="updateBoxToRoom(1, newRoomId)">Update</button>
         </div>
         
         <div class="d-flex justify-content-end align-items-end">
