@@ -1,28 +1,17 @@
 <div class="container-custom-log" style="margin: 1px; width:100%;">
+  <button (click)="toggleRefresh()">
+    {{isRefreshing ? 'Stop' : 'Start'}} Refreshing
+  </button>
 
-     <!-- Padding for Navbar -->
-     <div style="height: 35px;"></div> <!-- Adjust this value based on the height of your navbar -->
 
-    <!-- Table and Buttons -->
-    <div class="row">
-      <div class="col-sm-8 w-100">
-        <div class="table-responsive">
-          <table class="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th scope="col">DateTime</th>
-                <th scope="col">Classroom ID</th>
-                <th scope="col">Student ID</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of activityLogs">
-                <td>{{ item.logTime }}</td>
-                <td>{{ item.logLocation }}</td>
-                <td>{{ item.studentId }}</td>
-              </tr>
+  <ag-grid-angular
+  style="width: 100%; height: 870px"
+  class="ag-theme-alpine"
+  [rowData]="rowData$ | async"
+  [columnDefs]="columnDefs"
+  [defaultColDef]="defaultColDef"
+  [animateRows]="true"
+  (gridReady)="onGridReady($event)"
+></ag-grid-angular>
 
-    <div class="position-fixed end-0 top-0 mt-5" style="width: 15%;"> <!-- adjust width as needed -->
 
-        <button type="button" class="btn btn-primary mb-2" style="margin-top: 220%;">Export as CSV</button>
-      </div>

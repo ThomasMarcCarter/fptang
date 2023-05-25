@@ -19,6 +19,11 @@ import { AuthGuard } from './guards/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
 import { Pg01Component } from './classrooms/pg01/pg01.component';
 import { Pg02Component } from './classrooms/pg02/pg02.component';
+import { Pg03Component } from './classrooms/pg03/pg03.component';
+import { Pg04Component } from './classrooms/pg04/pg04.component';
+import { Pg05Component } from './classrooms/pg05/pg05.component';
+import { Pg06Component } from './classrooms/pg06/pg06.component';
+
 import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
@@ -31,7 +36,11 @@ import { AgGridModule } from 'ag-grid-angular';
     StudentsComponent,
     ActivityLogComponent,
     Pg01Component,
-    Pg02Component
+    Pg02Component,
+    Pg03Component,
+    Pg04Component,
+    Pg05Component,
+    Pg06Component
   ],
   imports: [
     BrowserModule,

@@ -1,75 +1,71 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-} from '@angular/animations';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActLogService } from '../../act-log.service';
 import { ActLog } from '../../act-log';
-import { interval } from 'rxjs';
-import { startWith, switchMap } from 'rxjs/operators';
+import { Subscription, interval } from 'rxjs';
+import { ColDef, GridReadyEvent } from 'ag-grid-community';
+import { AgGridAngular } from 'ag-grid-angular';
 
 @Component({
   selector: 'app-pg02',
   templateUrl: './pg02.component.html',
-  styleUrls: ['./pg02.component.css'],
-  animations: [
-    trigger('slideInUpAnimation', [
-      transition(':enter', [
-        style({ transform: 'translateY(100%)' }),
-        animate('0.5s ease-in-out', style({ transform: 'translateY(0%)' }))
-      ]),
-      transition(':leave', [
-        animate('0.5s ease-in-out', style({ transform: 'translateY(100%)' }))
-      ])
-    ])
-  ]
+  styleUrls: ['./pg02.component.css']
 })
-export class Pg02Component implements OnInit {
+export class Pg02Component implements OnInit, OnDestroy {
   activityLogs: ActLog[] = [];
-  mostRecentLogs: ActLog[] = [];
+  subscription: Subscription | undefined;
 
-  constructor(private actLogService: ActLogService) { }
+  @ViewChild('agGrid') agGrid: AgGridAngular | undefined;
 
-  ngOnInit(): void {
-    interval(5000).pipe(
-      startWith(0),
-      switchMap(() => this.actLogService.findAll())
-    ).subscribe(logs => {
-      console.log('Service response:', logs);  // Check service response
-      
+  columnDefs: ColDef[] = [
+    { headerName: '#ID', field: 'logEntryId', sortable: true, filter: true },
+    { headerName: 'Student Name', field: 'studentId', sortable: true, filter: true },
+    { headerName: 'Time-in-room', field: 'logTime', sortable: true, filter: true },
+    { headerName: 'Location', field: 'logLocation', sortable: true, filter: true },
+  ];
+
+  constructor(private actLogService: ActLogService) {}
+
+  ngOnInit() {
+    this.fetchData(); // Fetch data instantly at first
+    this.subscription = interval(5000).subscribe(() => {
+      this.fetchData();
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  private fetchData() {
+    this.actLogService.findAll().subscribe(data => {
       // Group logs by studentId
       const groupedLogs: { [key: string]: ActLog[] } = {};
-
-      for (const log of logs) {
+      for (const log of data) {
         if (!groupedLogs[log.studentId]) {
           groupedLogs[log.studentId] = [];
         }
         groupedLogs[log.studentId].push(log);
       }
 
-      console.log('Grouped logs:', groupedLogs);  // Check grouped logs
-      
-      // For each group, sort logs by logTime in descending order and pick the first log (i.e., the most recent)
+      // Select the most recent log for each student
       const mostRecentLogs: ActLog[] = [];
       for (const studentId in groupedLogs) {
         const studentLogs = groupedLogs[studentId];
         studentLogs.sort((a, b) => new Date(b.logTime || '').getTime() - new Date(a.logTime || '').getTime()); // sort in descending order
-        mostRecentLogs.push(studentLogs[0]); // pick the most recent
+        const mostRecentLog = studentLogs[0]; // pick the most recent
+        if (mostRecentLog && mostRecentLog.logLocation === 2) {
+          mostRecentLogs.push(mostRecentLog);
+        }
       }
 
-      console.log('Most recent logs:', mostRecentLogs);  // Check most recent logs
-
-      // Filter out logs not in classroom 1
-      const logsInClassroom1 = mostRecentLogs.filter(log => log.logLocation === 2);
-
-      // Do something with logsInClassroom1...
-      this.activityLogs = logsInClassroom1;
-
-      console.log('Activity Logs:', this.activityLogs);  // Check activityLogs
-      return logsInClassroom1;
+      // Update activityLogs with the most recent logs
+      this.activityLogs = mostRecentLogs.reverse();
     });
+  }
+
+  onGridReady(params: GridReadyEvent) {
+    params.api.sizeColumnsToFit();
   }
 }

@@ -1,32 +1,17 @@
 <div @slideInUpAnimation class="container-custom-log" style="margin: 1px; width:100%;">
 
-    <div class="col-sm-3">
-      <input class="form-control" type="text" placeholder="Search..." aria-label="Search">
-    </div>
-
-
-  <!-- Table and Buttons -->
+  <!-- AG Grid Angular Component -->
   <div class="row">
     <div class="col-sm-8 w-100">
-      <div class="table-responsive">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">#ID</th>
-              <th scope="col">Student ID</th>
-              <th scope="col">Time-in-room</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let log of activityLogs">
-              <td>{{log.logEntryId}}</td>
-              <td>{{log.studentId}}</td>
-              <td>{{log.logTime}}</td>
-              <td>{{log.logLocation}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <ag-grid-angular
+         style="width: 100%; height: 500px"
+         class="ag-theme-alpine"
+         [columnDefs]="columnDefs"
+         [rowData]="activityLogs"
+         [rowSelection]="'multiple'"
+         [animateRows]="true"
+         (gridReady)="onGridReady($event)"
+       ></ag-grid-angular>
     </div>
   </div>
 </div>
