@@ -23,6 +23,7 @@ export class ActivityLogComponent implements OnInit, OnDestroy {
   @ViewChild(AgGridAngular) agGrid!: AgGridAngular;
   
   private subscription: Subscription | undefined;
+  private gridApi: any;
 
   // Flag to keep track of refresh state
   isRefreshing = false;
@@ -39,6 +40,7 @@ export class ActivityLogComponent implements OnInit, OnDestroy {
   }
 
   onGridReady(params?: GridReadyEvent) {
+    this.gridApi = params?.api;
     this.rowData$ = this.actLogService.findAll();
     params?.api.sizeColumnsToFit({
       defaultMinWidth: 100
@@ -74,5 +76,11 @@ export class ActivityLogComponent implements OnInit, OnDestroy {
       { colId: 'logTime', sort: 'desc' }
     ],
   };
-  
+
+  exportAsCsv(): void {
+    var params = {
+      fileName: 'export.csv'
+    };
+    this.gridApi.exportDataAsCsv(params);
+  }
 }
